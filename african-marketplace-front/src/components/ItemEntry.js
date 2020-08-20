@@ -11,19 +11,24 @@ export default function ItemEntry () {
                     <input type='text' />
                 </label>
                 <br />
-                <label>Product Type:
+                <label>Category:
                     <select>
-                        <option>type 1</option>
-                        <option>type 2</option>
-                        <option>type 3</option>
+                        <option>-- select a category --</option>
+                        <option>Animal Product</option>
+                        <option>Cereals</option>
+                        <option>Beans</option>
                     </select>
                 </label>
                 <br />
-                <label> Product Price:
+                <label>Price:
                     <input type='text' /> USD
                 </label>
                 <br />
-                <button>Add Item</button>
+                <label>Description:
+                    <textarea />
+                </label>
+                <br />
+                <button>Add This Item</button>
             </form>
         </section>
     )
