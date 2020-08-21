@@ -67,3 +67,9 @@ button {
 	margin-top: 4rem;
 	width: 100%;
 }
+
+.loading {
+	font-size: 30px;
+	text-align: center;
+	margin: 50% auto;
+}
