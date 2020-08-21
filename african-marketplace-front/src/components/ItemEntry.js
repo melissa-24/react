@@ -1,7 +1,16 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+
+const blankState = {
+    name: '',
+    price: '',
+    description: '',
+    category: '',
+    location: ''
+}
 
 export default function ItemEntry () {
-    const item = []
+    const [productState, setProductState] = useState({...blankState})
+    console.log(productState)
     return (
         <section>
             <h2>Add Product</h2>
