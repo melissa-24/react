@@ -1,131 +1,123 @@
-import React, { useState, useEffect } from "react";
-import * as yup from "yup";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import * as yup from 'yup';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logIn } from '../actions/logInActions';
 
+function SignIn(props) {
+	const [formState, setFormState] = useState({
+		username: '',
+		password: '',
+	});
 
-export default function SignIn() {
-  const [formState, setFormState] = useState({
-    email: "",
-    password: "",
-  });
+	const [buttonDisabled, setButtonDisabled] = useState(true);
 
-  const [serverError, setServerError] = useState("");
+	const [errors, setErrors] = useState({
+		username: '',
+		password: '',
+	});
 
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+	const validateChange = (e) => {
+		yup
+			.reach(formSchema, e.target.name)
+			.validate(e.target.name === 'terms' ? e.target.checked : e.target.value)
+			.then((valid) => {
+				setErrors({
+					...errors,
+					[e.target.name]: '',
+				});
+			})
+			.catch((err) => {
+				console.log(err);
 
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
+				setErrors({
+					...errors,
+					[e.target.name]: err.errors[0],
+				});
+			});
+	};
 
-  const [post, setPost] = useState([]);
+	const formSubmit = (e) => {
+		e.preventDefault();
+		console.log('form submitted!');
+		props.logIn(formState);
+		console.log(props.loading);
+		console.log(props.serverError);
+		setFormState({
+			username: '',
+			password: '',
+		});
+	};
 
-  const validateChange = (e) => {
-    yup
-      .reach(formSchema, e.target.name)
-      .validate(e.target.name === "terms" ? e.target.checked : e.target.value)
-      .then((valid) => {
-        setErrors({
-          ...errors,
-          [e.target.name]: "",
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+	const inputChange = (e) => {
+		e.persist();
+		console.log('input changed!', e.target.value);
+		const newFormData = {
+			...formState,
+			[e.target.name]:
+				e.target.type === 'checkbox' ? e.target.checked : e.target.value,
+		};
 
-        setErrors({
-          ...errors,
-          [e.target.name]: err.errors[0],
-        });
-      });
-  };
+		validateChange(e);
+		setFormState(newFormData);
+	};
 
-  const formSubmit = (e) => {
-    e.preventDefault();
-    console.log("form submitted!");
+	const formSchema = yup.object().shape({
+		username: yup.string().required('Must include a username'),
+		password: yup.string().required('Password is required'),
+	});
 
-    axios
-      .post("https://reqres.in/api/users", formState)
-      .then((res) => {
-        console.log("success!", res.data);
+	useEffect(() => {
+		formSchema.isValid(formState).then((isValid) => {
+			setButtonDisabled(!isValid);
+		});
+	}, [formState, formSchema]);
 
-        setPost(res.data);
+	if (props.loading) {
+		console.log('loading');
+		return <span className='loading'>Loading...</span>;
+	}
 
-        setServerError(null);
+	return (
+		<form onSubmit={formSubmit}>
+			{props.serverError ? <p className='error'>{props.serverError}</p> : null}
 
-        setFormState({
-          email: "",
-          password: "",
-        });
-      })
-      .catch((err) => {
-        setServerError("oops! something happened!");
-      });
-  };
+			<input
+				id='username'
+				type='text'
+				name='username'
+				value={formState.username}
+				placeholder='Username'
+				onChange={inputChange}
+				data-cy='username'
+			/>
+			{errors.username.length > 0 ? (
+				<p className='error'>{errors.username}</p>
+			) : null}
 
-  const inputChange = (e) => {
-    e.persist();
-    console.log("input changed!", e.target.value);
-    const newFormData = {
-      ...formState,
-      [e.target.name]:
-        e.target.type === "checkbox" ? e.target.checked : e.target.value,
-    };
+			<input
+				type='string'
+				id='password'
+				name='password'
+				value={formState.password}
+				placeholder='Password'
+				onChange={inputChange}
+				data-cy='password'
+			/>
 
-    validateChange(e);
-    setFormState(newFormData);
-  };
-
-  const formSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email("Must be a valid email")
-      .required("Must include an email"),
-
-    password: yup.string().required("Password is required"),
-  });
-
-  useEffect(() => {
-    formSchema.isValid(formState).then((isValid) => {
-      setButtonDisabled(!isValid);
-    });
-  }, [formState]);
-
-  return (
-    <form onSubmit={formSubmit}>
-      {serverError ? <p className="error">{serverError}</p> : null}
-
-        <input
-          id="email"
-          type="text"
-          name="email"
-          value={formState.email}
-          placeholder="Email"
-          onChange={inputChange}
-          data-cy="email"
-        />
-        {errors.email.length > 0 ? (
-          <p className="error">{errors.email}</p>
-        ) : null}
-
-     
-        
-        <input
-          type="string"
-          id="password"
-          name="password"
-          value={formState.password}
-          placeholder="Password"
-          onChange={inputChange}
-          data-cy="password"
-        />
-   
-
-      <button disabled={buttonDisabled} type="submit">
-        Submit
-      </button>
-      <Link to="/Registration">Don't have an account? Please register</Link>
-    </form>
-  );
+			<button disabled={buttonDisabled} type='submit'>
+				Submit
+			</button>
+			<Link to='/Registration'>Don't have an account? Please register</Link>
+		</form>
+	);
 }
+
+const mapStateToProps = (state) => {
+	return {
+		serverError: state.logIn.error,
+		loading: state.logIn.loading,
+	};
+};
+
+export default connect(mapStateToProps, { logIn })(SignIn);
