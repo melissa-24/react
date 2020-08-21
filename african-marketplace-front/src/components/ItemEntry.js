@@ -12,6 +12,8 @@ const blankState = {
 export default function ItemEntry () {
 //form state
     const [formState, setFormState] = useState({...blankState});
+//button disabled state
+    const [btnDisabled, setBtndisabled] = useState(true);
     //const [productState, setProductState] = useState({});
 
 //change handler
@@ -32,7 +34,7 @@ export default function ItemEntry () {
                 <input id='name' name='name' type='text' placeholder='Rosecoco Beans' value={ formState.name } onChange={ handleChanges }/> 
                 <br />
 {/* CATEGORY INPUT*/}
-                <label>Category: </label>
+                <label htmlFor='category'>Category: </label>
                 <select id='category' name='category' value={ formState.category } onChange={ handleChanges } >
                     <option value=''>-- choose a category --</option>
                     <option value='animal product'>Animal Product</option>
@@ -41,15 +43,15 @@ export default function ItemEntry () {
                 </select>
                 <br />
 {/* PRICE INPUT*/}
-                <label>Price (USD): </label>
+                <label htmlFor='price'>Price (USD): </label>
                     <input id='price' name='price' type='number' placeholder='10.00' value={ formState.price } min='0.01' onChange={ handleChanges } />
                 <br />
 {/* DESCRIPTION TEXTAREA*/}
-                <label>Description: </label>
-                <textarea id='description' name='description' value={ formState.description } placeholder='Please describe the product in 1-2 sentences.'/>   
+                <label htmlFor='description'>Description: </label>
+                <textarea id='description' name='description' value={ formState.description } placeholder='Please describe the product in 1-2 sentences.' onChange={ handleChanges }/>   
                 <br />
 {/* SUBMIT BUTTON*/}
-                <button>Add This Item</button>
+                <button disabled={ btnDisabled }>Add This Item</button>
             </form>
         </section>
     )
