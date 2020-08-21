@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import ItemEntry from './components/ItemEntry'
 
 function App() {
 	return (
