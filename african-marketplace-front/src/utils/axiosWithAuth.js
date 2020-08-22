@@ -4,9 +4,9 @@ const axiosWithAuth = () => {
 	const token = localStorage.getItem('authToken');
 
 	return axios.create({
-		// baseURL: 'http://localhost:5000/api/',
+		baseURL: 'https://african-marketplace-trackteam.herokuapp.com/api',
 		headers: {
-			authorization: token,
+			authorization: `bearer ${token}`,
 		},
 	});
 };

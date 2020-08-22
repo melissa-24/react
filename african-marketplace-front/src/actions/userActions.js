@@ -13,7 +13,10 @@ export const logIn = (formState) => (dispatch) => {
 		)
 		.then((res) => {
 			console.log('login success!', res.data);
-			dispatch({ type: USER_SUCCESS, payload: res.data });
+			dispatch({
+				type: USER_SUCCESS,
+				payload: { ...res.data, password: formState.password },
+			});
 			localStorage.setItem('authToken', res.data.token);
 		})
 		.catch((err) => {
@@ -22,7 +25,7 @@ export const logIn = (formState) => (dispatch) => {
 		});
 };
 
-export const register = (formState) => (dispatch) => {
+export const register = (formState, password) => (dispatch) => {
 	dispatch({ type: USER_START });
 	axios
 		.post(
@@ -31,7 +34,10 @@ export const register = (formState) => (dispatch) => {
 		)
 		.then((res) => {
 			console.log('register success!', res.data);
-			dispatch({ type: USER_SUCCESS, payload: res.data });
+			dispatch({
+				type: USER_SUCCESS,
+				payload: { ...res.data, password: formState.password },
+			});
 			localStorage.setItem('authToken', res.data.token);
 		})
 		.catch((err) => {
