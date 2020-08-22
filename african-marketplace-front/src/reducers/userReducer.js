@@ -5,6 +5,7 @@ const initialState = {
 	id: null,
 	loading: false,
 	error: '',
+	password: '',
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -21,6 +22,7 @@ export const userReducer = (state = initialState, action) => {
 				id: action.payload.id,
 				loading: false,
 				error: '',
+				password: action.payload.password,
 			};
 		case USER_ERROR:
 			return {
