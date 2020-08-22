@@ -35,7 +35,7 @@ export default function ItemEntry () {
 //yup form schema
 const formSchema = yup.object().shape({
     name: yup.string().required().label('Name').min(2, 'Must be at least 2 characters'),
-    price: yup.number().required().label('Price').min(0.99, 'must be at least 0.99 USD'),
+    price: yup.number().required().label('Price').min(0.99, 'Price must be at least 0.99 USD'),
     description: yup.string().required().label('Description').min(2, 'must be at least 2 characters'),
     category: yup.string().oneOf(['animal product', 'cereal', 'bean']).required(),
     location: yup.string().min(3).max(3)
@@ -61,17 +61,30 @@ const formSchema = yup.object().shape({
                             ) : null }
                             <label htmlFor='price'>Price: </label>
                             <Field id='price' name='price' type='number' step='0.05' placeholder='10.00'/>
+                            {errors.price && touched.price ? (
+                                <p>{ errors.price }</p>
+                            ) : null }
                             <label htmlFor='category'>Category: </label>
                             <Field as='select' id='category' name='category'>
                                 <option value=''>-- choose a category --</option>
-                                <option value='animal'>Animal Product</option>
+                                <option value='animal product'>Animal Product</option>
                                 <option value='bean'>Bean</option>
                                 <option value='cereal'>Cereal</option>
                             </Field>
+                            {errors.category && touched.category ? (
+                                <p>{ errors.category }</p>
+                            ) : null}
                             <label htmlFor='description'>Description: </label>
                             <Field id='description' name='description' as='textarea' placeholder='describe this item in 1-2 sentences'/>
+                            {errors.description && touched.description ? (
+                                <p>{ errors.description }</p>
+                            ) : null}
                             <label htmlFor='location'>Location: </label>
-                            <Field  id='location' name='location' type='number' placeholder='KEN'/>
+                            <Field  id='location' name='location' type='text' placeholder='KEN'/>
+                            {errors.location && touched.location ? (
+                                <p>{ errors.location }</p>
+                            ) : null}
+                            <button type='submit'>Add Product</button>
                         </Form>
                     )}
                 </Formik>
