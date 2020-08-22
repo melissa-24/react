@@ -1,8 +1,4 @@
-import {
-	LOG_IN_START,
-	LOG_IN_SUCCESS,
-	LOG_IN_ERROR,
-} from '../actions/logInActions';
+import { USER_START, USER_SUCCESS, USER_ERROR } from '../actions/userActions';
 
 const initialState = {
 	username: '',
@@ -11,14 +7,14 @@ const initialState = {
 	error: '',
 };
 
-export const logInReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case LOG_IN_START:
+		case USER_START:
 			return {
 				...state,
 				loading: true,
 			};
-		case LOG_IN_SUCCESS:
+		case USER_SUCCESS:
 			return {
 				...state,
 				username: action.payload.username,
@@ -26,12 +22,13 @@ export const logInReducer = (state = initialState, action) => {
 				loading: false,
 				error: '',
 			};
-		case LOG_IN_ERROR:
+		case USER_ERROR:
 			return {
 				...state,
 				error: `Oops, something went wrong - ${action.payload.error}`,
 				loading: false,
 			};
+
 		default:
 			return state;
 	}

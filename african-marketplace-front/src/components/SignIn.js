@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as yup from 'yup';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logIn } from '../actions/logInActions';
+import { logIn } from '../actions/userActions';
 
 function SignIn(props) {
 	const [formState, setFormState] = useState({
@@ -41,8 +41,6 @@ function SignIn(props) {
 		e.preventDefault();
 		console.log('form submitted!');
 		props.logIn(formState);
-		console.log(props.loading);
-		console.log(props.serverError);
 		setFormState({
 			username: '',
 			password: '',
@@ -115,8 +113,8 @@ function SignIn(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		serverError: state.logIn.error,
-		loading: state.logIn.loading,
+		serverError: state.user.error,
+		loading: state.user.loading,
 	};
 };
 
