@@ -1,0 +1,121 @@
+import React, { useState, useEffect } from 'react';
+import * as yup from 'yup';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logIn } from '../actions/userActions';
+
+function SignIn(props) {
+	const [formState, setFormState] = useState({
+		username: '',
+		password: '',
+	});
+
+	const [buttonDisabled, setButtonDisabled] = useState(true);
+
+	const [errors, setErrors] = useState({
+		username: '',
+		password: '',
+	});
+
+	const validateChange = (e) => {
+		yup
+			.reach(formSchema, e.target.name)
+			.validate(e.target.name === 'terms' ? e.target.checked : e.target.value)
+			.then((valid) => {
+				setErrors({
+					...errors,
+					[e.target.name]: '',
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+
+				setErrors({
+					...errors,
+					[e.target.name]: err.errors[0],
+				});
+			});
+	};
+
+	const formSubmit = (e) => {
+		e.preventDefault();
+		console.log('form submitted!');
+		props.logIn(formState);
+		setFormState({
+			username: '',
+			password: '',
+		});
+	};
+
+	const inputChange = (e) => {
+		e.persist();
+		console.log('input changed!', e.target.value);
+		const newFormData = {
+			...formState,
+			[e.target.name]:
+				e.target.type === 'checkbox' ? e.target.checked : e.target.value,
+		};
+
+		validateChange(e);
+		setFormState(newFormData);
+	};
+
+	const formSchema = yup.object().shape({
+		username: yup.string().required('Must include a username'),
+		password: yup.string().required('Password is required'),
+	});
+
+	useEffect(() => {
+		formSchema.isValid(formState).then((isValid) => {
+			setButtonDisabled(!isValid);
+		});
+	}, [formState, formSchema]);
+
+	if (props.loading) {
+		console.log('loading');
+		return <span className='loading'>Loading...</span>;
+	}
+
+	return (
+		<form onSubmit={formSubmit}>
+			{props.serverError ? <p className='error'>{props.serverError}</p> : null}
+
+			<input
+				id='username'
+				type='text'
+				name='username'
+				value={formState.username}
+				placeholder='Username'
+				onChange={inputChange}
+				data-cy='username'
+			/>
+			{errors.username.length > 0 ? (
+				<p className='error'>{errors.username}</p>
+			) : null}
+
+			<input
+				type='string'
+				id='password'
+				name='password'
+				value={formState.password}
+				placeholder='Password'
+				onChange={inputChange}
+				data-cy='password'
+			/>
+
+			<button disabled={buttonDisabled} type='submit'>
+				Submit
+			</button>
+			<Link to='/Registration'>Don't have an account? Please register</Link>
+		</form>
+	);
+}
+
+const mapStateToProps = (state) => {
+	return {
+		serverError: state.user.error,
+		loading: state.user.loading,
+	};
+};
+
+export default connect(mapStateToProps, { logIn })(SignIn);
