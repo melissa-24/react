@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import * as yup from 'yup';
-import { Formik, Form, Field } from 'formik';
+import { useFormik, Formik } from 'formik';
+import axios from 'axios';
 
 //blank object for item data
 const blankState = {
-    name: '',
+    name: 'Lambda Beans',
     price: '',
     description: '',
     category: '',
@@ -13,30 +14,21 @@ const blankState = {
 
 export default function ItemEntry () {
 //form state
-    const [formState, setFormState] = useState({...blankState});
-//button disabled state
-    //const [btnDisabled, setBtnDisabled] = useState(false);
-    //const [productState, setProductState] = useState({});
+    const formik = useFormik({        
+        initialValues: {...blankState},
+        onSubmit: values => {
+            console.log('values submitted:', values);
+            axios.post('https://reqres.in/api/users', values)
+            .then(res => {
+                console.log('🌟 Data was posted!', res.data)
+            })
+            .catch(err => {
+                console.log('⛔ An error occurred!', err)
+            });
+        }
+    });
 
-//change handler
-    const handleChanges = (event) => {
-        event.persist();
-        setFormState({...formState, [event.target.name] : event.target.value});
-   
-    };
-
-    //logs CURRENT VALUE OF formState when changed
-    useEffect(() => {
-        console.log('formState val', formState);
-    }, [formState]);
-
-//submit
-    const submitForm = (event) => {
-        event.preventDefault();
-        //test to see what data will be sent 🔽
-        console.log('data captured!', formState);
-        
-    };
+    console.log('formik val', formik.values)
 
 //yup form schema
 const formSchema = yup.object().shape({
@@ -52,53 +44,40 @@ const formSchema = yup.object().shape({
         <section>
             <h2>Add Product</h2>
             <p>Please enter the following information.</p>
-            <Formik 
-            initialValues={{...blankState}}
-            validationSchema={ formSchema }
-            onSubmit = { submitForm }>
-                {({ errors, touched }) => (
-                    <Form>
+
+                    <form onSubmit = { formik.handleSubmit }>
                         <label htmlFor='name'>Product Name: </label>
-                        <Field id='name' name='name' type='text' placeholder='Rosecoco Beans' value = { formState.name } onChange= { handleChanges }/>
-                        {errors.name && touched.name ? (
-                            <p style={{color:'red',fontWeight: 'bold'}}>
-                                {errors.name}
-                            </p>
-                        ) : null }
+                        <input id='name' name='name' type='text' placeholder='Rosecoco Beans' onChange={ formik.handleChange } value={ formik.values.name }/>
+
                         <br />
+
                         <label htmlFor='price'>Price: </label>
-                        <Field id='price' name='price' type='number' step='0.05' placeholder='10.00' value = { formState.price } onChange= { handleChanges }/>
-                        {errors.price && touched.price ? (
-                            <p>{ errors.price }</p>
-                        ) : null }
+                        <input id='price' name='price' type='number' step='0.05' placeholder='10.00' onChange={ formik.handleChange } value={ formik.values.price }/>
+                        
                         <br />
+
                         <label htmlFor='category'>Category: </label>
-                        <Field as='select' id='category' name='category' value = { formState.category } onChange= { handleChanges }>
+                        <select id='category' name='category' onChange={ formik.handleChange } value={ formik.values.category }>
                             <option value=''>-- choose a category --</option>
                             <option value='animal product'>Animal Product</option>
                             <option value='bean'>Bean</option>
                             <option value='cereal'>Cereal</option>
-                        </Field>
-                        {errors.category && touched.category ? (
-                            <p>{ errors.category }</p>
-                        ) : null}
+                        </select>
+
                         <br />
+
                         <label htmlFor='description'>Description: </label>
-                        <Field id='description' name='description' as='textarea' placeholder='describe this item in 1-2 sentences' value = { formState.description } onChange= { handleChanges }/>
-                        {errors.description && touched.description ? (
-                            <p>{ errors.description }</p>
-                        ) : null}
+                        <textarea id='description' name='description' as='textarea' placeholder='describe this item in 1-2 sentences' onChange={ formik.handleChange } value={ formik.values.description }/>
+
                         <br />
+
                         <label htmlFor='location'>Location: </label>
-                        <Field  id='location' name='location' type='text' placeholder='KEN' value = { formState.location } onChange= { handleChanges }/>
-                        {errors.location && touched.location ? (
-                            <p>{ errors.location }</p>
-                        ) : null}
+                        <input id='location' name='location' type='text' placeholder='KEN' onChange={ formik.handleChange } value={ formik.values.location }/>
+
                         <br />
+
                         <button type='submit'>Add Product</button>
-                    </Form>
-                )}
-            </Formik>       
+                    </form>    
         </section>
     )
 }
