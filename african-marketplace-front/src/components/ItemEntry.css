@@ -1,0 +1,9 @@
+.errorMsg {
+    color: crimson;
+    font-weight: bold;
+
+}
+
+.errorMsg::before {
+    content: '❗';
+}

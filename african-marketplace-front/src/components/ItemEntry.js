@@ -1,21 +1,39 @@
 import React, {useState, useEffect} from 'react';
 import * as yup from 'yup';
-import { useFormik, Formik } from 'formik';
+import { useFormik, withFormik, ErrorMessage } from 'formik';
 import axios from 'axios';
+import './ItemEntry.css';
 
 //blank object for item data
 const blankState = {
-    name: 'Lambda Beans',
+    name: '',
     price: '',
     description: '',
     category: '',
     location: ''
 };
 
-export default function ItemEntry () {
+//yup schema
+    const formSchema = yup.object({
+        name: yup.string().required().label('Name').min(2, 'Must be at least 2 characters.'),
+        price: yup.number().required().label('Price').min(0.99, 'Price must be at least 0.99 USD'),
+        description: yup.string().required().label('Description').min(2, 'must be at least 2 characters'),
+        category: yup.string().oneOf(['animal product', 'cereal', 'bean']).required(),
+        location: yup.string().min(3, 'Must be at lest 3 characters.').required()
+    
+});
+
+const ItemEntry = () => {
 //form state
     const formik = useFormik({        
         initialValues: {...blankState},
+        validationSchema: yup.object({
+            name: yup.string().required().label('Name').min(2, 'Must be at least 2 characters.'),
+            price: yup.number().required().label('Price').min(0.99, 'Price must be at least 0.99 USD'),
+            description: yup.string().required().label('Description').min(2, 'must be at least 2 characters'),
+            category: yup.string().oneOf(['animal product', 'cereal', 'bean']).required(),
+            location: yup.string().min(3, 'Must be at lest 3 characters.').required()       
+        }),
         onSubmit: values => {
             console.log('values submitted:', values);
             axios.post('https://reqres.in/api/users', values)
@@ -28,31 +46,21 @@ export default function ItemEntry () {
         }
     });
 
-    console.log('formik val', formik.values)
-
-//yup form schema
-const formSchema = yup.object().shape({
-    name: yup.string().required().label('Name').min(2, 'Must be at least 2 characters'),
-    price: yup.number().required().label('Price').min(0.99, 'Price must be at least 0.99 USD'),
-    description: yup.string().required().label('Description').min(2, 'must be at least 2 characters'),
-    category: yup.string().oneOf(['animal product', 'cereal', 'bean']).required(),
-    location: yup.string().min(3).max(3).required()
-    
-});
-
     return (
         <section>
             <h2>Add Product</h2>
             <p>Please enter the following information.</p>
 
                     <form onSubmit = { formik.handleSubmit }>
-                        <label htmlFor='name'>Product Name: </label>
-                        <input id='name' name='name' type='text' placeholder='Rosecoco Beans' onChange={ formik.handleChange } value={ formik.values.name }/>
+                        <label htmlFor='name'>Product Name: </label>              
+                        <input id='name' name='name' type='text' placeholder='Rosecoco Beans' onChange={ formik.handleChange } value={ formik.values.name } onBlur= {formik.handleBlur}/>
+                        {formik.errors.name && formik.errors.name ? <span className='errorMsg'>{formik.errors.name}</span> : null}
+                        
 
                         <br />
 
                         <label htmlFor='price'>Price: </label>
-                        <input id='price' name='price' type='number' step='0.05' placeholder='10.00' onChange={ formik.handleChange } value={ formik.values.price }/>
+                        <input id='price' name='price' type='number' step='0.05' placeholder='10.00' onChange={ formik.handleChange } value={ formik.values.price } />
                         
                         <br />
 
@@ -81,3 +89,5 @@ const formSchema = yup.object().shape({
         </section>
     )
 }
+
+export default ItemEntry;
