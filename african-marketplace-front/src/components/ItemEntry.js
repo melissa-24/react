@@ -14,7 +14,7 @@ const blankState = {
 };
 
 const ItemEntry = () => {
-//form state
+//form state and yup validation
     const formik = useFormik({        
         initialValues: {...blankState},
         validationSchema: yup.object({
@@ -24,8 +24,9 @@ const ItemEntry = () => {
             category: yup.string().oneOf(['animal product', 'cereal', 'bean']).required(),
             location: yup.string().min(3, 'Must be at lest 3 characters.').required()       
         }),
+        // ⏬ formik automagically added form data values to obj, 'values'
         onSubmit: values => {
-            console.log('values submitted:', values);
+/* AXIOS */
             axios.post('https://reqres.in/api/users', values)
             .then(res => {
                 console.log('🌟 Data was posted!', res.data)
