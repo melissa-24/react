@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import * as yup from 'yup';
+import { useFormik } from 'formik';
+import axios from 'axios';
+import './ItemEntry.css';
 
 //blank object for item data
 const blankState = {
@@ -10,63 +13,72 @@ const blankState = {
     location: ''
 };
 
-export default function ItemEntry () {
-//form state
-    const [formState, setFormState] = useState({...blankState});
-//button disabled state
-    const [btnDisabled, setBtnDisabled] = useState(false);
-    //const [productState, setProductState] = useState({});
-
-//change handler
-    const handleChanges = (event) => {
-        event.persist();
-        setFormState({...formState, [event.target.name] : event.target.value});
-        console.log('formState val', formState);
-    };
-
-//submit
-    const submitForm = (event) => {
-        event.preventDefault();
-        //test to see what data will be sent 🔽
-        console.log('data captured!', formState);
-    };
-
-//yup form schema
-const formSchema = yup.object().shape({
-    name: yup.string().required('Please enter your name!'),
-    
-});
+const ItemEntry = () => {
+//form state and yup validation
+    const formik = useFormik({        
+        initialValues: {...blankState},
+        validationSchema: yup.object({
+            name: yup.string().required().label('Name').min(2, 'Must be at least 2 characters.'),
+            price: yup.number().required().label('Price').min(0.99, 'Price must be at least 0.99 USD'),
+            description: yup.string().required().label('Description').min(2, 'must be at least 2 characters'),
+            category: yup.string().oneOf(['animal product', 'cereal', 'bean']).required(),
+            location: yup.string().min(3, 'Must be at lest 3 characters.').required()       
+        }),
+        // ⏬ formik automagically added form data values to obj, 'values'
+        onSubmit: values => {
+/* AXIOS */
+            axios.post('https://reqres.in/api/users', values)
+            .then(res => {
+                console.log('🌟 Data was posted!', res.data)
+            })
+            .catch(err => {
+                console.log('⛔ An error occurred!', err)
+            });
+        }
+    });
 
     return (
         <section>
             <h2>Add Product</h2>
             <p>Please enter the following information.</p>
-{/* FORM */}
-            <form onSubmit= { submitForm }>
-{/* NAME INPUT*/}
-                <label htmlFor='name'>Product Name: </label>
-                <input id='name' name='name' type='text' placeholder='Rosecoco Beans' value={ formState.name } onChange={ handleChanges }/> 
-                <br />
-{/* CATEGORY INPUT*/}
-                <label htmlFor='category'>Category: </label>
-                <select id='category' name='category' value={ formState.category } onChange={ handleChanges } >
-                    <option value=''>-- choose a category --</option>
-                    <option value='animal product'>Animal Product</option>
-                    <option value='cereal'>Cereal</option>
-                    <option value='bean'>Bean</option>
-                </select>
-                <br />
-{/* PRICE INPUT*/}
-                <label htmlFor='price'>Price (USD): </label>
-                    <input id='price' name='price' type='number' placeholder='10.00' step='0.05' value={ formState.price } min='0.01' onChange={ handleChanges } />
-                <br />
-{/* DESCRIPTION TEXTAREA*/}
-                <label htmlFor='description'>Description: </label>
-                <textarea id='description' name='description' value={ formState.description } placeholder='Please describe the product in 1-2 sentences.' onChange={ handleChanges }/>   
-                <br />
-{/* SUBMIT BUTTON*/}
-                <button disabled={ btnDisabled } type='submit'>Add This Item</button>
-            </form>
+
+                    <form onSubmit = { formik.handleSubmit }>
+                        <label htmlFor='name'>Product Name: </label>              
+                        <input id='name' name='name' type='text' placeholder='Rosecoco Beans' onChange={ formik.handleChange } value={ formik.values.name } onBlur= {formik.handleBlur}/>
+                        {formik.errors.name && formik.errors.name ? <span className='errorMsg'>{formik.errors.name}</span> : null}
+                        
+                        <br />
+
+                        <label htmlFor='price'>Price: </label>
+                        <input id='price' name='price' type='number' step='0.05' placeholder='10.00' onChange={ formik.handleChange } value={ formik.values.price } onBlur= {formik.handleBlur} />
+                        {formik.errors.price && formik.errors.price ? <span className='errorMsg'>{formik.errors.price}</span> : null}
+
+                        <br />
+
+                        <label htmlFor='category'>Category: </label>
+                        <select id='category' name='category' onChange={ formik.handleChange } value={ formik.values.category }onBlur= {formik.handleBlur} >
+                            <option value=''>-- choose a category --</option>
+                            <option value='animal product'>Animal Product</option>
+                            <option value='bean'>Bean</option>
+                            <option value='cereal'>Cereal</option>
+                        </select>
+                        {formik.errors.category && formik.errors.category ? <span className='errorMsg'>{formik.errors.category}</span> : null}
+                        <br />
+
+                        <label htmlFor='description'>Description: </label>
+                        <textarea id='description' name='description' as='textarea' placeholder='describe this item in 1-2 sentences' onChange={ formik.handleChange } value={ formik.values.description } onBlur= {formik.handleBlur} />
+                        {formik.errors.description && formik.errors.description ? <span className='errorMsg'>{formik.errors.description}</span> : null}
+                        <br />
+
+                        <label htmlFor='location'>Location: </label>
+                        <input id='location' name='location' type='text' placeholder='KEN' onChange={ formik.handleChange } value={ formik.values.location } onBlur= {formik.handleBlur} />
+                        {formik.errors.location && formik.errors.location ? <span className='errorMsg'>{formik.errors.location}</span> : null}
+                        <br />
+
+                        <button type='submit' disabled={ formik.isValid && formik.values !== formik.initialValues ? false : true }>Add Product</button>
+                    </form>    
         </section>
     )
 }
+
+export default ItemEntry;
