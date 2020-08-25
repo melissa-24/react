@@ -4,23 +4,28 @@ import { useFormik } from 'formik';
 // import axios from 'axios';
 import './ItemEntry.css';
 import { connect } from 'react-redux';
-import { addItem } from '../actions/itemActions';
+import { updateItem } from '../actions/itemActions';
 import { useHistory } from 'react-router-dom';
 
 //blank object for item data
-const blankState = {
-	name: '',
-	price: '',
-	description: '',
-	category: '',
-	// location: '',
-};
+// const blankState = {
+// 	name: '',
+// 	price: '',
+// 	description: '',
+// 	category: '',
+// 	// location: '',
+// };
 
-const ItemEntry = (props) => {
+const ItemEdit = (props) => {
 	const history = useHistory();
 	//form state and yup validation
 	const formik = useFormik({
-		initialValues: { ...blankState },
+		initialValues: {
+			name: props.item.product,
+			price: props.item.price,
+			description: props.item.description,
+			category: props.item.categorys_id,
+		},
 		validationSchema: yup.object({
 			name: yup
 				.string()
@@ -45,8 +50,9 @@ const ItemEntry = (props) => {
 		}),
 		// ⏬ formik automagically added form data values to obj, 'values'
 		onSubmit: async (values) => {
-			await props.addItem(values, props.id);
+			await props.updateItem(values, props.item.id, props.id);
 			history.push('/user');
+			props.setEditing(false);
 			/* AXIOS */
 			// axios
 			// 	.post('https://reqres.in/api/users', values)
@@ -61,8 +67,8 @@ const ItemEntry = (props) => {
 
 	return (
 		<section>
-			<h2>Add Product</h2>
-			<p>Please enter the following information.</p>
+			<h2>Edit Product</h2>
+			{/* <p>Please enter the following information.</p> */}
 
 			<form onSubmit={formik.handleSubmit}>
 				<label htmlFor='name'>Product Name: </label>
@@ -167,4 +173,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { addItem })(ItemEntry);
+export default connect(mapStateToProps, { updateItem })(ItemEdit);

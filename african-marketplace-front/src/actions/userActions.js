@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 export const USER_START = 'USER_START';
 export const USER_SUCCESS = 'USER_SUCCESS';
 export const USER_ERROR = 'USER_ERROR';
@@ -25,7 +24,7 @@ export const logIn = (formState) => (dispatch) => {
 		});
 };
 
-export const register = (formState, password) => (dispatch) => {
+export const register = (formState) => (dispatch) => {
 	dispatch({ type: USER_START });
 	axios
 		.post(

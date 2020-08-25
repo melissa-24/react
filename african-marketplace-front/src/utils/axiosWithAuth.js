@@ -6,7 +6,7 @@ const axiosWithAuth = () => {
 	return axios.create({
 		baseURL: 'https://african-marketplace-trackteam.herokuapp.com/api',
 		headers: {
-			authorization: `bearer ${token}`,
+			authorization: `Bearer ${token}`,
 		},
 	});
 };

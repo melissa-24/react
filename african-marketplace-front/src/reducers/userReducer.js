@@ -19,7 +19,7 @@ export const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				username: action.payload.username,
-				id: action.payload.id,
+				id: action.payload.user_id,
 				loading: false,
 				error: '',
 				password: action.payload.password,
