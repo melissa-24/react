@@ -93,11 +93,14 @@ function Form(props) {
 
 		username: yup.string().required('Please choose a username'),
 
-		password: yup.string().required('Password is required'),
-
-		passwordConfirmation: yup
+		password: yup.string().min(8).max(128),
+		passwordConfirmation: yup.string().when("password", {
+		  is: (val) => val && val.length > 0,
+		  then: yup
 			.string()
-			.oneOf([yup.ref('password'), null], 'Passwords must match'),
+			.oneOf([yup.ref("password")], "Both passwords need to be the same")
+			.required(),
+		}),
 
 		location: yup.string().required('Please Include Location'),
 
