@@ -1,0 +1,23 @@
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+img { 
+    border: 1px solid black;
+}
+
+.user-card {
+    display: flex;
+    border: 1px silver solid;
+}
+
+.user-card-left {
+    background: black;
+    color: white;
+}
+
+.user-card-right p:nth-of-type(2) {
+    font-style: italic;
+}
