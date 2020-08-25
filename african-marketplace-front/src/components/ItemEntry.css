@@ -1,9 +1,12 @@
 .errorMsg {
-    color: crimson;
-    font-weight: bold;
-
+	color: crimson;
+	font-weight: bold;
 }
 
 .errorMsg::before {
-    content: '❗';
+	content: '❗';
+}
+
+textarea {
+	min-height: 50px;
 }

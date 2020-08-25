@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import * as yup from 'yup';
 import { connect } from 'react-redux';
 import { register } from '../actions/userActions';
+import { useHistory } from 'react-router-dom';
 
 function Form(props) {
+	const history = useHistory();
+
 	const [formState, setFormState] = useState({
 		name: '',
 		email: '',
@@ -46,26 +49,26 @@ function Form(props) {
 			});
 	};
 
-	const formSubmit = (e) => {
+	const formSubmit = async (e) => {
 		e.preventDefault();
 		console.log('form submitted!');
-		props.register({
+		await props.register({
 			email: formState.email,
 			name: formState.name,
 			username: formState.username,
 			password: formState.password,
 			location: formState.location,
 		});
-
-		setFormState({
-			name: '',
-			email: '',
-			username: '',
-			password: '',
-			passwordConfirmation: '',
-			location: '',
-			terms: true,
-		});
+		history.push('/home');
+		// setFormState({
+		// 	name: '',
+		// 	email: '',
+		// 	username: '',
+		// 	password: '',
+		// 	passwordConfirmation: '',
+		// 	location: '',
+		// 	terms: true,
+		// });
 	};
 
 	const inputChange = (e) => {

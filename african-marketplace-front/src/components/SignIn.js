@@ -3,8 +3,11 @@ import * as yup from 'yup';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logIn } from '../actions/userActions';
+import { useHistory } from 'react-router-dom';
 
 function SignIn(props) {
+	const history = useHistory();
+
 	const [formState, setFormState] = useState({
 		username: '',
 		password: '',
@@ -37,14 +40,16 @@ function SignIn(props) {
 			});
 	};
 
-	const formSubmit = (e) => {
+	const formSubmit = async (e) => {
 		e.preventDefault();
 		console.log('form submitted!');
-		props.logIn(formState);
-		setFormState({
-			username: '',
-			password: '',
-		});
+		await props.logIn(formState);
+		history.push('/home');
+
+		// setFormState({
+		// 	username: '',
+		// 	password: '',
+		// });
 	};
 
 	const inputChange = (e) => {
@@ -106,7 +111,7 @@ function SignIn(props) {
 			<button disabled={buttonDisabled} type='submit'>
 				Submit
 			</button>
-			<Link to='/Registration'>Don't have an account? Please register</Link>
+			<Link to='/registration'>Don't have an account? Please register</Link>
 		</form>
 	);
 }
