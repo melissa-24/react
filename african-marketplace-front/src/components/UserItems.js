@@ -6,6 +6,7 @@ import ItemEdit from './ItemEdit';
 function UserItems(props) {
 	const [editing, setEditing] = useState(false);
 	const [itemToEdit, setItemToEdit] = useState({});
+
 	useEffect(() => {
 		props.getUserItems(props.id);
 	}, [props.id]);
@@ -17,6 +18,7 @@ function UserItems(props) {
 
 	const handleDelete = (id) => {
 		props.deleteItem(id);
+		props.getUserItems(id);
 	};
 
 	return (

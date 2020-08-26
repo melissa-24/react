@@ -82,7 +82,7 @@ export const updateItem = (formState, itemId, id) => (dispatch) => {
 			dispatch({ type: UPDATE_ITEM_SUCCESS, payload: res.data });
 		})
 		.catch((err) => {
-			dispatch({ type: UPDATE_ITEM_ERROR, payload: { error: err.message } });
+			dispatch({ type: UPDATE_ITEM_ERROR, payload: err.message });
 		});
 };
 
@@ -94,6 +94,6 @@ export const deleteItem = (id) => (dispatch) => {
 			dispatch({ type: DELETE_ITEM_SUCCESS });
 		})
 		.catch((err) => {
-			dispatch({ type: DELETE_ITEM_ERROR });
+			dispatch({ type: DELETE_ITEM_ERROR, payload: err.message });
 		});
 };
