@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {Route , Link} from 'react-router-dom';
+import UserCard from './UserCard';
 //import './AllUsers.css';
 
 function AllUsers() {
@@ -17,24 +19,25 @@ function AllUsers() {
 
     return (
         <section>
-            <h2>All Users Component</h2>
+            <h2>All Sellers</h2>
+            <p>Below are all our registered small business owners. Please click on thier name for more information.</p>
             <div className='users-container'>
+                <ul>
                 {userState.map(user => {
                     return (
-                        <div key={user.id} className='user-card'>
-                            <div className='user-card-left'>
-                                <img src={`https://picsum.photos/id/${user.id + 1001}/150`} alt={`${user.first_name}'s profile`} />                               
-                                <p><a href='#'>Visit Store</a></p>
-                            </div>
-                            <div className='user-card-right'>
-                                <h3>username12345</h3>
-                                <p>{user.first_name} {user.last_name}</p>
-                                <p>📧 {user.email}</p>
-                                <p>🌎 USA</p>
-                            </div>
-                        </div>)
+                        <li key={user.id}>
+                            <Link to={`/users/${user.id}`}>{`user${user.id}`} ({user.first_name} {user.last_name})</Link>                       
+                        </li> 
+                        /* Change to {username} (name) */
+
+                    )
                 })}
-            </div>          
+                </ul>
+            </div>
+            <Route path='/users/:id'>
+                <h3>Hello!</h3>
+                <UserCard user = {userState}/>
+            </Route>       
         </section>
     );
 }
