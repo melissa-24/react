@@ -73,3 +73,28 @@ button {
 	text-align: center;
 	margin: 50% auto;
 }
+
+#nav {
+	width: 100%;
+	float: right;
+	margin: 0 0 3em 0;
+	padding: 10px;
+	list-style: none;
+  }
+  
+  #nav li {
+	float: left;
+  }
+  
+  #nav {
+	width: 100%;
+	float: right;
+	padding: 0;
+	list-style: none;
+  }
+  
+  #nav li a {
+	display: block;
+	padding: 8px 15px;
+	text-decoration: none;
+  }
