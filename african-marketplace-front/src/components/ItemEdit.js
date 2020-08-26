@@ -1,10 +1,9 @@
 import React from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-// import axios from 'axios';
 import './ItemEntry.css';
 import { connect } from 'react-redux';
-import { updateItem } from '../actions/itemActions';
+import { updateItem, getUserItems } from '../actions/itemActions';
 import { useHistory } from 'react-router-dom';
 
 //blank object for item data
@@ -51,6 +50,7 @@ const ItemEdit = (props) => {
 		// ⏬ formik automagically added form data values to obj, 'values'
 		onSubmit: async (values) => {
 			await props.updateItem(values, props.item.id, props.id);
+			await props.getUserItems(props.id);
 			history.push('/user');
 			props.setEditing(false);
 			/* AXIOS */
@@ -173,4 +173,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { updateItem })(ItemEdit);
+export default connect(mapStateToProps, { updateItem, getUserItems })(ItemEdit);
