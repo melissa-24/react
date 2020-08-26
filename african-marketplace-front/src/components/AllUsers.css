@@ -1,23 +1,48 @@
-body {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+h3 {
+    padding:0;
+    margin:0;
+    width: 100%;
+    background: darkslateblue;
+    color: floralwhite;
 }
 
-img { 
-    border: 1px solid black;
+.users-container {
+    padding:0;
+    margin:0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    max-width: 900px;
 }
 
 .user-card {
+    padding:0;
+    margin-bottom:15px;
     display: flex;
     border: 1px silver solid;
+    width: 400px;
 }
 
 .user-card-left {
-    background: black;
+    background: silver;
     color: white;
 }
 
-.user-card-right p:nth-of-type(2) {
-    font-style: italic;
+.user-card-right {
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.user-card a {
+    font-weight: bold;
+    text-decoration: none;
+    color: darkslateblue;
+}
+
+.user-card a::after {
+    content: ' ➡';
 }
