@@ -74,27 +74,26 @@ button {
 	margin: 50% auto;
 }
 
-#nav {
-	width: 100%;
-	float: right;
-	margin: 0 0 3em 0;
-	padding: 10px;
-	list-style: none;
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
   }
   
-  #nav li {
+  li {
 	float: left;
   }
   
-  #nav {
-	width: 100%;
-	float: right;
-	padding: 0;
-	list-style: none;
+  li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
   }
   
-  #nav li a {
-	display: block;
-	padding: 8px 15px;
-	text-decoration: none;
+  li a:hover {
+	background-color: #111;
   }
