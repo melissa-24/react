@@ -92,6 +92,7 @@ export const itemReducer = (state = initialState, action) => {
 				...state,
 				loading: false,
 				error: '',
+				userItems: action.payload,
 			};
 		case DELETE_ITEM_ERROR:
 			return {
@@ -110,6 +111,7 @@ export const itemReducer = (state = initialState, action) => {
 				...state,
 				loading: false,
 				error: '',
+				userItems: action.payload,
 			};
 		case UPDATE_ITEM_ERROR:
 			return {

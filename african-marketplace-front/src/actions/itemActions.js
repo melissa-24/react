@@ -54,21 +54,22 @@ export const getAllItems = () => (dispatch) => {
 
 export const getUserItems = (id) => (dispatch) => {
 	dispatch({ type: GET_USER_ITEMS_START });
-	console.log('userItems start');
+	console.log('getUserItems start');
 	axiosWithAuth()
 		.get(`/by-user/${id}`)
 		.then((res) => {
 			dispatch({ type: GET_USER_ITEMS_SUCCESS, payload: res.data.data });
-			console.log('userItems success', res.data.data);
+			console.log('getUserItems success', res.data.data);
 		})
 		.catch((err) => {
 			dispatch({ type: GET_USER_ITEMS_ERROR, payload: err.message });
-			console.log('userItems err', err.message);
+			console.log('getUserItems err', err.message);
 		});
 };
 
 export const updateItem = (formState, itemId, id) => (dispatch) => {
 	dispatch({ type: UPDATE_ITEM_START });
+	console.log('updateItem start');
 	axiosWithAuth()
 		.put(`/items/${itemId}`, {
 			id: itemId,
@@ -79,21 +80,37 @@ export const updateItem = (formState, itemId, id) => (dispatch) => {
 			price: formState.price,
 		})
 		.then((res) => {
-			dispatch({ type: UPDATE_ITEM_SUCCESS, payload: res.data });
+			axiosWithAuth()
+				.get(`/by-user/${id}`)
+				.then((res) => {
+					dispatch({ type: UPDATE_ITEM_SUCCESS, payload: res.data.data });
+				});
 		})
 		.catch((err) => {
 			dispatch({ type: UPDATE_ITEM_ERROR, payload: err.message });
+			console.log('updateItemError');
 		});
 };
 
 export const deleteItem = (id) => (dispatch) => {
 	dispatch({ type: DELETE_ITEM_START });
+	console.log('deleteItem Start');
 	axiosWithAuth()
 		.delete(`/items/${id}`)
 		.then((res) => {
-			dispatch({ type: DELETE_ITEM_SUCCESS });
+			console.log('del items: requesting user items start');
+			axiosWithAuth()
+				.get(`/by-user/${id}`)
+				.then((res) => {
+					console.log(
+						'del items: requesting user items success',
+						res.data.data
+					);
+					dispatch({ type: DELETE_ITEM_SUCCESS, payload: res.data.data });
+				});
 		})
 		.catch((err) => {
 			dispatch({ type: DELETE_ITEM_ERROR, payload: err.message });
+			console.log('deleteItem error');
 		});
 };

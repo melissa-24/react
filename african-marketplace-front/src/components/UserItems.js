@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { getUserItems, deleteItem } from '../actions/itemActions';
 import ItemEdit from './ItemEdit';
+// import { useHistory } from 'react-router-dom';
 
 function UserItems(props) {
+	// const history = useHistory();
 	const [editing, setEditing] = useState(false);
 	const [itemToEdit, setItemToEdit] = useState({});
 
 	useEffect(() => {
 		props.getUserItems(props.id);
-	}, [props.id]);
+	}, []);
 
 	const handleEditing = (item) => {
 		setEditing(true);
@@ -18,13 +20,11 @@ function UserItems(props) {
 
 	const handleDelete = (id) => {
 		props.deleteItem(id);
-		props.getUserItems(id);
 	};
 
 	return (
 		<div>
 			{props.items.map((item) => {
-				console.log(item);
 				return (
 					<div key={item.id}>
 						<span>{item.product}</span>
