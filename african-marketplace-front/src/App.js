@@ -13,7 +13,6 @@ function App() {
 	return (
 		<div className='App'>
 			<h1 style={{ margin: '0 auto' }}>African Marketplace</h1>
-			<AllUsers />
 			<Switch>
 				<Route exact path='/' component={SignIn} />
 				<Route path='/registration' component={Registration} />
