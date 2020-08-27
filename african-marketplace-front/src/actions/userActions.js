@@ -3,7 +3,7 @@ export const USER_START = 'USER_START';
 export const USER_SUCCESS = 'USER_SUCCESS';
 export const USER_ERROR = 'USER_ERROR';
 
-export const logIn = (formState) => (dispatch) => {
+export const logIn = (formState) => async (dispatch) => {
 	dispatch({ type: USER_START });
 	axios
 		.post(

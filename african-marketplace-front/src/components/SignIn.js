@@ -40,17 +40,22 @@ function SignIn(props) {
 			});
 	};
 
-	const formSubmit = async (e) => {
+	const formSubmit = (e) => {
 		e.preventDefault();
 		console.log('form submitted!');
-		await props.logIn(formState);
-		history.push('/home');
+		props.logIn(formState);
 
 		// setFormState({
 		// 	username: '',
 		// 	password: '',
 		// });
 	};
+
+	useEffect(() => {
+		if (props.username) {
+			history.push('/home');
+		}
+	}, [props.username]);
 
 	const inputChange = (e) => {
 		e.persist();
@@ -120,6 +125,7 @@ const mapStateToProps = (state) => {
 	return {
 		serverError: state.user.error,
 		loading: state.user.loading,
+		username: state.user.username,
 	};
 };
 

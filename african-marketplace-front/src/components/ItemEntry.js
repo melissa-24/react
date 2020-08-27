@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 // import axios from 'axios';
 import './ItemEntry.css';
 import { connect } from 'react-redux';
-import { addItem } from '../actions/itemActions';
+import { addItem, getUserItems } from '../actions/itemActions';
 import { useHistory } from 'react-router-dom';
 
 //blank object for item data
@@ -38,14 +38,10 @@ const ItemEntry = (props) => {
 				.label('Description')
 				.min(2, 'must be at least 2 characters'),
 			category: yup.number().oneOf([1, 2, 3]).required(),
-			// location: yup
-			// 	.string()
-			// 	.min(3, 'Must be at least 3 characters.')
-			// 	.required(),
 		}),
 		// ⏬ formik automagically added form data values to obj, 'values'
-		onSubmit: async (values) => {
-			await props.addItem(values, props.id);
+		onSubmit: (values) => {
+			props.addItem(values, props.id);
 			history.push('/user');
 			/* AXIOS */
 			// axios
@@ -167,4 +163,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { addItem })(ItemEntry);
+export default connect(mapStateToProps, { addItem, getUserItems })(ItemEntry);
