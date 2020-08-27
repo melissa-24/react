@@ -1,9 +1,21 @@
 import React from 'react';
+import {useParams} from 'react-router-dom';
 
-function UserCard({user}) {
+function UserCard({users}) {
+    
+    let params = useParams();
+    let userID = {...params}
+    const selectedUser = users.filter(user => params.id === user.id)
+    console.log('data', users)
+    console.log(params.id)
+    console.log('user clicked', selectedUser)
     return(
-        <div key={user.id} className='user-card'>
+    <p>
+        User Card
+    </p>
+/*         <div className='user-card'>
             <div className='user-card-left'>
+                
                 <img src={`https://picsum.photos/id/${user.id + 1001}/150`} alt={`${user.first_name}'s profile`} />                               
                 <p><a href='#'>Visit Store</a></p>
             </div>
@@ -13,7 +25,7 @@ function UserCard({user}) {
                 <p>📧 {user.email}</p>
                 <p>🌎 USA</p>
             </div>
-        </div>
+    </div> */
     )
 }
 
