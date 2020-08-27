@@ -18,10 +18,10 @@ function AllUsers() {
    
 
     return (
-        <section>
+        <section>        
+            <Route exact path='/users'>
             <h2>All Sellers</h2>
             <p>Below are all our registered small business owners. Please click on thier name for more information.</p>
-            <Route exact path='/users'>
                 <div className='users-container'>
                     <ul>
                     {userState.map(user => {
@@ -35,7 +35,7 @@ function AllUsers() {
                     </ul>
                 </div>
             </Route>
-            <Route exact path='/users/:id'>
+            <Route path='/users/:id'>
                 <UserCard users = {userState}/>
             </Route>   
         </section>

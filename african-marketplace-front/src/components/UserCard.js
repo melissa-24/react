@@ -1,31 +1,32 @@
 import React from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, Link} from 'react-router-dom';
 
 function UserCard({users}) {
     
     let params = useParams();
-    let userID = {...params}
-    const selectedUser = users.filter(user => params.id === user.id)
-    console.log('data', users)
-    console.log(params.id)
-    console.log('user clicked', selectedUser)
+    let userID = params.id; //returns as string
+    const selectedUser = users.filter(user => user.id === parseInt(userID)) //returns array with single object
+    const userObj = selectedUser[0]; //grabbing that object
+
     return(
-    <p>
-        User Card
-    </p>
-/*         <div className='user-card'>
-            <div className='user-card-left'>
-                
-                <img src={`https://picsum.photos/id/${user.id + 1001}/150`} alt={`${user.first_name}'s profile`} />                               
-                <p><a href='#'>Visit Store</a></p>
+        <section>
+            <h2>Seller Page: {userObj.first_name}</h2>
+            <div className='user-card'>
+                <div className='user-card-left'>
+                    
+                    <img src={`https://picsum.photos/id/${userObj.id + 1001}/150`} alt={`${userObj.first_name}'s profile`} />   
+                    {/* ⬆⬆⬆ Placeholder image ⬆⬆⬆ */}
+                </div>
+                <div className='user-card-right'>
+                    <h3>username12345</h3>
+                    {/* ⬆⬆⬆ replace above with userObj.username ⬆⬆⬆ */}
+                    <p>{userObj.first_name} {userObj.last_name}</p>
+                    <p>📧 {userObj.email}</p>
+                    <p>🌎 USA</p>
+                </div>
             </div>
-            <div className='user-card-right'>
-                <h3>username12345</h3>
-                <p>{user.first_name} {user.last_name}</p>
-                <p>📧 {user.email}</p>
-                <p>🌎 USA</p>
-            </div>
-    </div> */
+            <Link to='/users'>🔙 Back to All Sellers</Link>
+        </section>
     )
 }
 
