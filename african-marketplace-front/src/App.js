@@ -9,11 +9,14 @@ import DisplayAllItems from './components/DisplayAllItems';
 import UserItems from './components/UserItems';
 import Navigation from'./components/Navbar';
 
+
 function App() {
 	return (
 		<div className='App'>
+
 			{/* <h1 style={{ margin: '0 auto' }}>African Marketplace</h1> */}
 			<Navigation/>
+
 			<Switch>
 				<Route exact path='/' component={SignIn} />
 				<Route path='/registration' component={Registration} />

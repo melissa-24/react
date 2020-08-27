@@ -13,9 +13,13 @@ function DisplayAllItems(props) {
 			{props.items.map((item) => {
 				return (
 					<div key={item.id}>
-						<span>{item.product}</span>
-						<span>{item.description}</span>
-						<span>{item.price}</span>
+						<span>Item Name:{item.product}</span>
+						<br />
+						<span>Description: {item.description}</span>
+						<br />
+						<span>Price: ${item.price}</span>
+						<br />
+						<br />
 					</div>
 				);
 			})}
@@ -26,7 +30,6 @@ function DisplayAllItems(props) {
 const mapStateToProps = (state) => {
 	return {
 		items: state.item.allItems,
-		// ...state,
 	};
 };
 
