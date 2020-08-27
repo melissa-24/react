@@ -42,7 +42,6 @@ const ItemEntry = (props) => {
 		// ⏬ formik automagically added form data values to obj, 'values'
 		onSubmit: (values) => {
 			props.addItem(values, props.id);
-			props.getUserItems(props.id);
 			history.push('/user');
 			/* AXIOS */
 			// axios
