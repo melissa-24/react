@@ -8,6 +8,8 @@ export const GET_USERS_START = 'GET_USERS_START';
 export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS';
 export const GET_USERS_ERROR = 'GET_USERS_ERROR';
 
+export const LOG_OUT = 'LOG_OUT';
+
 export const logIn = (formState) => async (dispatch) => {
 	dispatch({ type: USER_START });
 	axios
@@ -61,4 +63,9 @@ export const getAllUsers = () => (dispatch) => {
 		.catch((err) => {
 			dispatch({ type: GET_USERS_ERROR, payload: err.message });
 		});
+};
+
+export const logOut = () => (dispatch) => {
+	dispatch({ type: LOG_OUT });
+	localStorage.removeItem('authToken');
 };
