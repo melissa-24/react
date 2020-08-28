@@ -1,7 +1,12 @@
 import axios from 'axios';
+import axiosWithAuth from '../utils/axiosWithAuth';
 export const USER_START = 'USER_START';
 export const USER_SUCCESS = 'USER_SUCCESS';
 export const USER_ERROR = 'USER_ERROR';
+
+export const GET_USERS_START = 'GET_USERS_START';
+export const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS';
+export const GET_USERS_ERROR = 'GET_USERS_ERROR';
 
 export const logIn = (formState) => async (dispatch) => {
 	dispatch({ type: USER_START });
@@ -42,5 +47,18 @@ export const register = (formState) => (dispatch) => {
 		.catch((err) => {
 			console.log(err.message);
 			dispatch({ type: USER_ERROR, payload: { error: err.message } });
+		});
+};
+
+export const getAllUsers = () => (dispatch) => {
+	dispatch({ type: GET_USERS_START });
+	axiosWithAuth()
+		.get('/users')
+		.then((res) => {
+			console.log(res.data);
+			dispatch({ type: GET_USERS_SUCCESS, payload: res.data });
+		})
+		.catch((err) => {
+			dispatch({ type: GET_USERS_ERROR, payload: err.message });
 		});
 };

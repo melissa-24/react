@@ -37,7 +37,7 @@ const ItemEntry = (props) => {
 				.required()
 				.label('Description')
 				.min(2, 'must be at least 2 characters'),
-			category: yup.number().oneOf([1, 2, 3]).required(),
+			category: yup.number().oneOf([34, 35, 36, 37, 38]).required(),
 		}),
 		// ⏬ formik automagically added form data values to obj, 'values'
 		onSubmit: (values) => {
@@ -55,6 +55,10 @@ const ItemEntry = (props) => {
 		},
 	});
 
+	if (props.loading) {
+		return <h2>Loading...</h2>;
+	}
+
 	return (
 		<section>
 			<h2>Add Product</h2>
@@ -66,7 +70,7 @@ const ItemEntry = (props) => {
 					id='name'
 					name='name'
 					type='text'
-					placeholder='Rosecoco Beans'
+					placeholder='item name'
 					onChange={formik.handleChange}
 					value={formik.values.name}
 					onBlur={formik.handleBlur}
@@ -83,7 +87,7 @@ const ItemEntry = (props) => {
 					name='price'
 					type='number'
 					step='0.05'
-					placeholder='10.00'
+					placeholder='item price'
 					onChange={formik.handleChange}
 					value={formik.values.price}
 					onBlur={formik.handleBlur}
@@ -103,9 +107,11 @@ const ItemEntry = (props) => {
 					onBlur={formik.handleBlur}
 				>
 					<option value=''>-- choose a category --</option>
-					<option value={1}>Animal Product</option>
-					<option value={2}>Bean</option>
-					<option value={3}>Cereal</option>
+					<option value={34}>Baskets</option>
+					<option value={35}>Coffee</option>
+					<option value={36}>Beans</option>
+					<option value={37}>Animal Product</option>
+					<option value={38}>Other</option>
 				</select>
 				{formik.errors.category && formik.errors.category ? (
 					<span className='errorMsg'>{formik.errors.category}</span>
@@ -160,6 +166,7 @@ const ItemEntry = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		id: state.user.id,
+		loading: state.item.loading,
 	};
 };
 

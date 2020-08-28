@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { getUserItems, deleteItem } from '../actions/itemActions';
 import ItemEdit from './ItemEdit';
-// import { useHistory } from 'react-router-dom';
+import './itemcard.css';
 
 function UserItems(props) {
-	// const history = useHistory();
 	const [editing, setEditing] = useState(false);
 	const [itemToEdit, setItemToEdit] = useState({});
 
@@ -18,23 +17,31 @@ function UserItems(props) {
 		setItemToEdit(item);
 	};
 
-	const handleDelete = (id) => {
-		props.deleteItem(id);
+	const handleDelete = (itemId, userId) => {
+		props.deleteItem(itemId, userId);
 	};
+
+	if (props.loading) {
+		return <h2>Loading...</h2>;
+	}
 
 	return (
 		<div>
 			{props.items.map((item) => {
 				return (
-					<div key={item.id}>
-						<span>{item.product}</span>
+					<div key={item.id} className='item-card'>
+						<h3>Item: {item.product}</h3>
 						<br />
-						<span>{item.description}</span>
+						<p>Description: {item.description}</p>
 						<br />
-						<span>${item.price}</span>
+						<p>Category: {item.category}</p>
+						<br />
+						<span>Price: ${item.price}</span>
 						<br />
 						<button onClick={() => handleEditing(item)}>Edit Item</button>
-						<button onClick={() => handleDelete(item.id)}>Delete Item</button>
+						<button onClick={() => handleDelete(item.id, props.id)}>
+							Delete Item
+						</button>
 					</div>
 				);
 			})}
@@ -48,6 +55,7 @@ const mapStateToProps = (state) => {
 	return {
 		items: state.item.userItems,
 		id: state.user.id,
+		loading: state.item.loading,
 	};
 };
 

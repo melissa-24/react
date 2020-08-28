@@ -80,20 +80,31 @@ ul {
 	padding: 0;
 	overflow: hidden;
 	background-color: #333;
-  }
-  
-  li {
+}
+
+li {
 	float: left;
-  }
-  
-  li a {
-	display: block;
+}
+
+li a {
+	/* display: block; */
 	color: white;
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
-  }
-  
-  li a:hover {
+	cursor: pointer;
+}
+
+li a:hover {
 	background-color: #111;
-  }
+}
+
+.main-heading {
+	text-align: center;
+	font-size: 28px;
+}
+
+.welcome-user {
+	color: white;
+	margin-right: 100px;
+}

@@ -1,12 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+// import '../index.css';
 
-class Navigation extends Component {
-	render() {
-		return (
-			<div className='nav-header'>
-				<p>African Marketplace</p>
+function Navigation(props) {
+	const history = useHistory();
+
+	const handleLogout = () => {
+		localStorage.removeItem('authToken');
+		history.push('/');
+	};
+
+	return (
+		<div className='nav-header'>
+			<p className='main-heading'>African Marketplace</p>
+			{localStorage.getItem('authToken') && props.username && (
 				<ul id='nav'>
+					<li>
+						<span className='welcome-user'>Welcome, {props.username}</span>
+					</li>
 					<li>
 						<Link to='/user'>User's Items</Link>
 					</li>
@@ -19,9 +32,22 @@ class Navigation extends Component {
 					<li>
 						<Link to='/home'>All Items</Link>
 					</li>
+					<li>
+						<Link to='/users'>See All Users</Link>
+					</li>
+					<li>
+						<a onClick={handleLogout}>Log Out</a>
+					</li>
 				</ul>
-			</div>
-		);
-	}
+			)}
+		</div>
+	);
 }
-export default Navigation;
+
+const mapStateToProps = (state) => {
+	return {
+		username: state.user.username,
+	};
+};
+
+export default connect(mapStateToProps, {})(Navigation);
