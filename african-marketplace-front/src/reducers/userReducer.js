@@ -5,6 +5,7 @@ import {
 	GET_USERS_START,
 	GET_USERS_SUCCESS,
 	GET_USERS_ERROR,
+	LOG_OUT,
 } from '../actions/userActions';
 
 const initialState = {
@@ -55,6 +56,14 @@ export const userReducer = (state = initialState, action) => {
 				...state,
 				loading: false,
 				error: action.payload,
+			};
+
+		case LOG_OUT:
+			return {
+				...state,
+				username: '',
+				id: null,
+				password: '',
 			};
 
 		default:
