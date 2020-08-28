@@ -92,15 +92,14 @@ export const updateItem = (formState, itemId, id) => (dispatch) => {
 		});
 };
 
-export const deleteItem = (id) => (dispatch) => {
+export const deleteItem = (id, userId) => (dispatch) => {
 	dispatch({ type: DELETE_ITEM_START });
 	console.log('deleteItem Start');
 	axiosWithAuth()
 		.delete(`/items/${id}`)
 		.then((res) => {
-			console.log('del items: requesting user items start');
 			axiosWithAuth()
-				.get(`/by-user/${id}`)
+				.get(`/by-user/${userId}`)
 				.then((res) => {
 					console.log(
 						'del items: requesting user items success',

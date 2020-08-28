@@ -41,7 +41,7 @@ const ItemEdit = (props) => {
 				.required()
 				.label('Description')
 				.min(2, 'must be at least 2 characters'),
-			category: yup.number().oneOf([1, 2, 3]).required(),
+			category: yup.number().oneOf([34, 35, 36, 37, 38]).required(),
 			// location: yup
 			// 	.string()
 			// 	.min(3, 'Must be at least 3 characters.')
@@ -64,6 +64,10 @@ const ItemEdit = (props) => {
 			// 	});
 		},
 	});
+
+	if (props.loading) {
+		return <h2>Loading...</h2>;
+	}
 
 	return (
 		<section>
@@ -113,9 +117,11 @@ const ItemEdit = (props) => {
 					onBlur={formik.handleBlur}
 				>
 					<option value=''>-- choose a category --</option>
-					<option value={1}>Animal Product</option>
-					<option value={2}>Bean</option>
-					<option value={3}>Cereal</option>
+					<option value={34}>Baskets</option>
+					<option value={35}>Coffee</option>
+					<option value={36}>Beans</option>
+					<option value={37}>Animal Product</option>
+					<option value={38}>Other</option>
 				</select>
 				{formik.errors.category && formik.errors.category ? (
 					<span className='errorMsg'>{formik.errors.category}</span>
@@ -170,6 +176,7 @@ const ItemEdit = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		id: state.user.id,
+		loading: state.item.loading,
 	};
 };
 

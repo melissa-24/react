@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getAllItems } from '../actions/itemActions';
+import './itemcard.css';
 
 function DisplayAllItems(props) {
 	useEffect(() => {
@@ -12,10 +13,12 @@ function DisplayAllItems(props) {
 		<div>
 			{props.items.map((item) => {
 				return (
-					<div key={item.id}>
-						<span>Item Name:{item.product}</span>
+					<div key={item.id} className='item-card'>
+						<h3>Item:{item.product}</h3>
 						<br />
-						<span>Description: {item.description}</span>
+						<p>Description: {item.description}</p>
+						<br />
+						<p>Category: {item.category}</p>
 						<br />
 						<span>Price: ${item.price}</span>
 						<br />

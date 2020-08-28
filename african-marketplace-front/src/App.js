@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import './App.css';
 import ItemEntry from './components/ItemEntry';
 import SignIn from './components/SignIn';
 import Registration from './components/Registration';
@@ -8,6 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 import DisplayAllItems from './components/DisplayAllItems';
 import UserItems from './components/UserItems';
 import Navigation from './components/Navbar';
+import AllUsers from './components/AllUsers';
 
 function App() {
 	return (
@@ -20,6 +20,7 @@ function App() {
 				<PrivateRoute path='/home' component={DisplayAllItems} />
 				<PrivateRoute path='/user' component={UserItems} />
 				<PrivateRoute path='/sell' component={ItemEntry} />
+				<PrivateRoute path='/users' component={AllUsers} />
 			</Switch>
 		</div>
 	);
