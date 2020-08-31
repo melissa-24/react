@@ -28,8 +28,7 @@ function App() {
 				</Switch>
 				</div>
 				<footer>
-					<h4>Our Mission:</h4>
-					<p>Empowering small businesses connect via tech!</p>
+					<p>Our Mission: Empowering small businesses to connect via tech.</p>
 					<p>&copy; 2020 Track Team Pilot 726 </p>
 				</footer>
 		</div>
