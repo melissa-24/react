@@ -1,6 +1,6 @@
 html {
 	margin: 0;
-	padding:0;
+	padding: 0;
 	box-sizing: border-box;
 }
 /* ⬆⬆  sam added short html reset ⬆⬆ */
@@ -87,7 +87,7 @@ ul {
 	overflow: hidden;
 	background-color: #1a2e40;
 	/* background-color: #333; */
-	display:flex;
+	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
@@ -103,8 +103,6 @@ li a {
 	padding: 14px 16px;
 	text-decoration: none;
 	cursor: pointer;
-
-	
 }
 
 li a:hover {
@@ -129,13 +127,13 @@ li a:hover {
 /* sam's additions ⏬ */
 
 body {
-	margin:0 auto;
+	margin: 0 auto;
 	min-height: 600px;
 	background: url('./images/wheat.png') repeat fixed;
 }
 
 .main-app-header h1 {
-	color:wheat;
+	color: wheat;
 	margin: 0;
 	padding: 10px;
 	text-shadow: 3px 3px 5px black;
@@ -145,21 +143,24 @@ body {
 	max-width: 100%;
 	height: 350px;
 	background: url('./images/market2000.jpg') no-repeat;
-	border-top:5px solid #1a2e40;
-	border-bottom:5px solid #1a2e40;
+	border-top: 5px solid #1a2e40;
+	border-bottom: 5px solid #1a2e40;
 }
 
 .main-app-container {
 	padding: 15px;
-	margin: 0 auto;
-	width:100%;
+	margin: 10px auto;
+	width: 100%;
 	max-width: 1000px;
 	min-height: 500px;
 	background: rgba(245, 222, 179, 0.699);
-	
 }
 
 footer {
 	background: #866161;
 	padding: 15px;
+	display: flex;
+	justify-content: space-between;
+	color: white;
+	margin-top: 10px;
 }
