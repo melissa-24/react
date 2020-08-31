@@ -44,11 +44,6 @@ function SignIn(props) {
 		e.preventDefault();
 		console.log('form submitted!');
 		props.logIn(formState);
-
-		// setFormState({
-		// 	username: '',
-		// 	password: '',
-		// });
 	};
 
 	useEffect(() => {
@@ -82,7 +77,6 @@ function SignIn(props) {
 	}, [formState, formSchema]);
 
 	if (props.loading) {
-		console.log('loading');
 		return <span className='loading'>Loading...</span>;
 	}
 
@@ -106,7 +100,7 @@ function SignIn(props) {
 			) : null}
 
 			<input
-				type='string'
+				type='password'
 				id='password'
 				name='password'
 				value={formState.password}

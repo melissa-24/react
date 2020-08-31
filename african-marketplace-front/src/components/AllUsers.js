@@ -26,7 +26,7 @@ function AllUsers(props) {
 	}, []);
 
 	if (props.loading) {
-		return <h2>Loading...</h2>;
+		return <span className='loading'>Loading...</span>;
 	}
 
 	return (
