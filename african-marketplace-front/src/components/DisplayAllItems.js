@@ -6,11 +6,12 @@ import './itemcard.css';
 function DisplayAllItems(props) {
 	useEffect(() => {
 		props.getAllItems();
-		// console.log(props);
 	}, []);
 
 	return (
-		<div className='item-card-container'> {/* added classname to div --sam */}
+		<div className='item-card-container'>
+			{' '}
+			{/* added classname to div --sam */}
 			{props.items.map((item) => {
 				return (
 					<div key={item.id} className='item-card'>

@@ -22,11 +22,13 @@ function UserItems(props) {
 	};
 
 	if (props.loading) {
-		return <h2>Loading...</h2>;
+		return <span className='loading'>Loading...</span>;
 	}
 
 	return (
-		<div className='item-card-container'> {/* Added classname to this div -sam */}
+		<div className='item-card-container'>
+			{' '}
+			{/* Added classname to this div -sam */}
 			{props.items.map((item) => {
 				return (
 					<div key={item.id} className='item-card'>
