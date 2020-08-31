@@ -38,23 +38,24 @@ function AllUsers(props) {
 				their name for more information.
 			</p>
 			<div className='users-container'>
-				<ul>
+				<section className='user-list'>
 					{users.map((user) => {
 						return (
-							<li key={user.id}>
+							<p key={user.id}>
 								<Link to={`/users/${user.id}`}>
-									{`user${user.id}`} ({user.name})
+									{user.username} ({user.name})
 								</Link>
-							</li>
-							/* Change to {username} (name) */
+							</p>
 						);
 					})}
-				</ul>
+				</section>
+				<section className='user-card-box'>
+					{/* </Route> */}
+					<Route path='/users/:id'>
+						<UserCard users={users} />
+					</Route>
+				</section>
 			</div>
-			{/* </Route> */}
-			<Route path='/users/:id'>
-				<UserCard users={users} />
-			</Route>
 		</section>
 	);
 }

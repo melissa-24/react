@@ -1,8 +1,9 @@
 h3 {
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	background: darkslateblue;
+	box-sizing: border-box;
+	padding: 5px;
+	margin:0;
+	width:100%;
+	background: #1a2e40;
 	color: floralwhite;
 }
 
@@ -11,38 +12,40 @@ h3 {
 	margin: 0 auto;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-evenly;
+	justify-content: space-between;
+	align-items: center;
 	max-width: 900px;
+
 }
 
 .user-card {
-	padding: 0;
-	/* margin-bottom:15px; */
-	margin: 0 auto 15px auto;
-	display: flex;
-	border: 1px silver solid;
-	width: 400px;
-}
-
-.user-card-left {
-	background: silver;
-	color: white;
-}
-
-.user-card-right {
 	display: flex;
 	flex-direction: column;
-	width: 100%;
 	align-items: center;
-	justify-content: center;
+	margin: 0 auto 15px auto;
+	width: 400px;
+	border: 1px solid #1a2e40;
+	background: floralwhite;
+	border-radius: 5px;
 }
 
-.user-card a {
+/* .user-card-left {
+	background: silver;
+	color: white;
+} */
+
+.user-list p a {
+	padding: 5px;
 	font-weight: bold;
 	text-decoration: none;
-	color: darkslateblue;
+	color: #1a2e40;
 }
 
-.user-card a::after {
+.user-list p a:hover {
+	background: #1a2e40;
+	color: floralwhite;
+}
+
+.user-list p a:hover::after {
 	content: ' ➡';
 }
