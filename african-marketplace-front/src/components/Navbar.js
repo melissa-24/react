@@ -15,11 +15,11 @@ function Navigation(props) {
 
 	return (
 		<div className='nav-header'>
-			<p className='main-heading'>African Marketplace</p>
+			{/* <p className='main-heading'>African Marketplace</p> commented out -sam */}
 			{props.username && (
 				<ul id='nav'>
 					<li>
-						<span className='welcome-user'>Welcome, {props.username}</span>
+						<span className='welcome-user'>Welcome, {props.username}!</span>
 					</li>
 					<li>
 						<Link to='/user'>User's Items</Link>
