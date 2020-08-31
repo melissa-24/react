@@ -120,6 +120,8 @@ function Form(props) {
 
 	return (
 		<form onSubmit={formSubmit}>
+			<h2>New Seller Registration!</h2>
+			<p>Welcome! Please fill out the following information to continue.</p>
 			{props.serverError ? <p className='error'>{props.serverError}</p> : null}
 
 			<input

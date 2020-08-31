@@ -12,16 +12,25 @@ import AllUsers from './components/AllUsers';
 function App() {
 	return (
 		<div className='App'>
-			{/* <h1 style={{ margin: '0 auto' }}>African Marketplace</h1> */}
+			<header className='main-app-header'>
+				<h1>African Marketplace</h1>
+				<div className='img-container'></div>
+			</header>
 			<Navigation />
-			<Switch>
-				<Route exact path='/' component={SignIn} />
-				<Route path='/registration' component={Registration} />
-				<PrivateRoute path='/home' component={DisplayAllItems} />
-				<PrivateRoute path='/user' component={UserItems} />
-				<PrivateRoute path='/sell' component={ItemEntry} />
-				<PrivateRoute path='/users' component={AllUsers} />
-			</Switch>
+			<div className='main-app-container'>
+				<Switch>
+					<Route exact path='/' component={SignIn} />
+					<Route path='/registration' component={Registration} />
+					<PrivateRoute path='/home' component={DisplayAllItems} />
+					<PrivateRoute path='/user' component={UserItems} />
+					<PrivateRoute path='/sell' component={ItemEntry} />
+					<PrivateRoute path='/users' component={AllUsers} />
+				</Switch>
+				</div>
+				<footer>
+					<p>Our Mission: Empowering small businesses to connect via tech.</p>
+					<p>&copy; 2020 Track Team Pilot 726 </p>
+				</footer>
 		</div>
 	);
 }

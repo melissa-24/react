@@ -88,6 +88,8 @@ function SignIn(props) {
 
 	return (
 		<form onSubmit={formSubmit}>
+			<h2>Welcome back!</h2>
+			<p>Please login to continue.</p>
 			{props.serverError ? <p className='error'>{props.serverError}</p> : null}
 
 			<input
