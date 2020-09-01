@@ -36,6 +36,7 @@ export const itemReducer = (state = initialState, action) => {
 				...state,
 				loading: false,
 				error: '',
+				userItems: action.payload,
 			};
 		case ADD_ITEM_ERROR:
 			return {

@@ -28,8 +28,11 @@ export const addItem = (formState, id) => (dispatch) => {
 			price: formState.price,
 		})
 		.then((res) => {
-			dispatch({ type: ADD_ITEM_SUCCESS });
-			console.log(res, 'addItem success');
+			axiosWithAuth()
+				.get(`/by-user/${id}`)
+				.then((res) => {
+					dispatch({ type: ADD_ITEM_SUCCESS, payload: res.data.data });
+				});
 		})
 		.catch((err) => {
 			console.log('addItem err', err.message);
